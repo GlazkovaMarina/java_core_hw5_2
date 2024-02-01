@@ -1,8 +1,8 @@
+import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.InputStreamReader;
+
 
 public class Main {
     public static String to2Bits(int decimalNumber) {
@@ -19,7 +19,6 @@ public class Main {
     }
 
     public static int toDecimal(String binaryNumber) {
-        //напишите тут ваш код
         if(binaryNumber == null) {
             return 0;
         }
@@ -34,10 +33,33 @@ public class Main {
         return decimal;
     }
 
-
-
+    static public int[] inputArray(int[] array){
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        int choice;
+        boolean bool;
+        for (int i = 0; i < array.length; i++) {
+            System.out.println("Введите значение от 0 до 3 включительно:");
+            choice = 0;
+            bool = false;
+            while (!bool) {
+                try {
+                    choice = Integer.parseInt(reader.readLine());
+                    if (choice >= 0 && choice < 4){
+                        bool = true;
+                    } else {
+                        System.out.println("Ошибка ввода!");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Ошибка ввода!");
+                }
+            }
+            array[i] = choice;
+        }
+        return array;
+    }
     public static void main(String[] args) {
-        int[]array = {3,3,3,3,3,3,3,3,3};
+        int[]array = new int[9];
+        inputArray(array);
         try(FileOutputStream fos=new FileOutputStream("notes.txt"))
         {
             fos.write(array[0]);
@@ -49,12 +71,10 @@ public class Main {
                     validString = "";
                 }
             }
-            System.out.println(validString);
+            System.out.println("Проверьте размер файла notes.txt");
         }
         catch(IOException ex){
-
             System.out.println(ex.getMessage());
         }
-
     }
 }
